@@ -17,6 +17,33 @@ L.tileLayer(
     "T6YbdDixkOBWH_k9GbS8JQ"
 ).addTo(myMap);
 
+var mydata = JSON.parse(data);
+
+ // Creating a new choropleth layer
+  geojson = L.choropleth(mydata, {
+    // Which property in the features to use
+    valueProperty: "MHI",
+    // Color scale
+    scale: ["#ffffb2", "#b10026"],
+    // Number of breaks in step range
+    steps: 10,
+    // q for quantile, e for equidistant, k for k-means
+    mode: "q",
+    style: {
+      // Border color
+      color: "#fff",
+      weight: 1,
+      fillOpacity: 0.8
+    },
+    // Binding a pop-up to each layer
+    onEachFeature: function(feature, layer) {
+      layer.bindPopup(feature.properties.COUNTY + " " + feature.properties.State + "<br>Median Household Income:<br>" +
+        "$" + feature.properties.MHI);
+    }
+  }).addTo(myMap);
+
+
+
 
 
 
