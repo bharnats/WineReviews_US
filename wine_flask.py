@@ -1,12 +1,11 @@
 from flask import Flask, jsonify, render_template
 import os
 import numpy as np
-
 import pandas as pd
 
 
 # read the csv files into pandas as dataframes
-filepath = os.path.join("templates/coordinates.csv")
+filepath = os.path.join("raw_data/coordinates.csv")
 coord_df = pd.read_csv(filepath,encoding="iso-8859-1", low_memory=False)
 # replace the empty strings with NaN values in latitude and longitude columns
 coord_df['longitude'].replace('', np.nan, inplace=True)
@@ -32,7 +31,7 @@ for index, row in variety_df.iterrows():
         "type": "Feature",
         "geometry": {
             "type": "Point",
-            "coordinates": [row['latitude'],row['longitude']] 
+            "coordinates": [row['longitude'], row['latitude']] 
         },
         "properties": {
             "name":row['region_1'],
@@ -52,6 +51,10 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
+    return render_template('index.html')
+
+@app.route("/Data")
+def Map():
     return jsonify(geoJson_data)
 
 @app.route("/regions")
