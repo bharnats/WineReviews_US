@@ -24,6 +24,23 @@ grouped = grouped['region_1'].count()
 # create a dataframe from the grouped object
 variety_df = pd.DataFrame({'count' : coord_df.groupby( [ "variety", "region_1","latitude","longitude"] ).size()}).reset_index()
 
+# groupby the dataframe by region_1,lat and long and count the unique varieties for each region
+cluster= coord_df.groupby(["region_1","latitude","longitude"]).agg({"variety":pd.Series.nunique}).reset_index()
+# create json dictionary from the above dataframe
+json_data =[]
+
+for index,row in cluster.iterrows():
+   
+    location = {
+        "type": "Point",
+        "coordinates": [row['latitude'],row['longitude']] ,
+        "variety_count":row['variety'],
+        "region":row['region_1']
+    }
+    json_data.append(location)
+
+
+
 # creating the geojson data for the landing page
 geojson=[]
 for index, row in variety_df.iterrows():
@@ -64,6 +81,12 @@ def names():
 @app.route("/varieties")
 def types():
     return jsonify(variety)
+
+# data for marker clusters map
+@app.route("/cluster_data")
+def cluster():
+    return jsonify(json_data)
+
 
 @app.route('/varieties/<grape>')
 def samples(grape):
