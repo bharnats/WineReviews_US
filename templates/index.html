@@ -7,17 +7,37 @@
   <!-- Leaflet CSS & JS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+  
+<!--D3 cdn-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js"></script>
+  <!-- our css -->
+ <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}" />
 
-  <!-- Our CSS -->
-  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
-  <!-- The div where we will inject our map -->
-  <div id="map"></div>
+
+
+   <!--<div class="container-fluid">
+        <div class="jumbotron">
+           
+                <h3 class="text-center">Wine Analytics</h3>
+                <br><br>
+          
+                    <div class="row">
+                    <div class="col-md-2">
+                    <div class="form-group">
+                    <p>SELECT Grape:</p>
+             
+                    <select class="select_width" id="selectGrape" onchange="optionChanged(this.value)">
+                    <option >Select Grape</option>
+                    </select>
+                    </div> -->
+    <!-- The div where we will inject our map  -->
+  <div id="map"></div>  
 
   <!-- Our JS -->
-<script type="text/javascript" src="data.json"></script>
-<script type = "text/javascript" src="app.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/grape.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>
