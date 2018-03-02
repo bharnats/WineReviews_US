@@ -74,11 +74,17 @@ def cluster():
 
     return jsonify(json_data)
 
-@app.route("/bar")
+# Navigation between pages
+@app.route("/bar.html")
 def bar():
     """Return the homepage."""
     return render_template('bar.html')
 
+@app.route("/index.html")
+def home():
+    return render_template('index.html')
+
+# Routes for charts
 @app.route('/states')
 def states():
     """Return a list of sample names."""
