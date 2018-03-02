@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Flask Plotlyjs Example</title>
+    <title>Wine Reviews - BarPlot</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 <body>
@@ -25,11 +27,11 @@
                             </div>
                             <div id="navbar" class="navbar-collapse collapse">
                               <ul class="nav navbar-nav">
-                                <li class="active"><a href="index.html">Home</a></li>
-                                <li class="dropdown">
+                                <li><a href="index.html">Home</a></li>
+                                <li class="dropdown active">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Plots <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
-                                      <li><a href='plots/cloudiness.html'>Cloudiness</a></li>
+                                      <li><a href='bar.html'>Points & Price</a></li>
                                       <li><a href='plots/humidity.html'>Humidity</a></li>
                                       <li><a href='plots/temp.html'>Temperature</a></li>
                                       <li><a href='plots/windspeed.html'>Wind Speed</a></li>
