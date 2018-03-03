@@ -14,9 +14,6 @@ from flask_heroku import Heroku
 
 from flask import Flask, jsonify, render_template
 app = Flask(__name__)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-heroku = Heroku(app)
-session = SQLAlchemy(app)
 #################################################
 # Database Setup
 #################################################
@@ -110,24 +107,15 @@ if __name__ == "__main__":
     #dbfile = os.path.join('raw_data/wine_reviews.sqlite')
     
 #    dbfile = os.path.join('postgresql-shallow-66978')
-#    engine = create_engine(f"postgresql:///{dbfile}")
+    engine = create_engine(f"postgresql://localhost/wine-analytics")
     # reflect an existing database into a new model
-
-    #dbname = url.path[1:]
-    #user = url.username
-    #password = url.password
-    #host = url.hostname
-    #port = url.port
-
-
-
-#    Base = automap_base()
+    Base = automap_base()
     # reflect the tables
-#    Base.prepare(engine, reflect=True)
+    Base.prepare(engine, reflect=True)
     # Save references to each table
-#    wine_reviews = Base.classes.reviews 
+    wine_reviews = Base.classes.reviews 
     # Create our session (link) from Python to the Database
-#    session = Session(engine)
+    session = Session(engine)
     app.run()
     
 
