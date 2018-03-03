@@ -99,6 +99,27 @@ def stateData(state):
     }]
     return jsonify(data)
 
+@app.route("/data.html")
+def data():
+    """Return the data for the table"""
+    return render_template('data.html')
+
+
+@app.route("/tabledata")
+def tabledata():
+    # Query for the number of wine reviews by state
+    stmt = session.query(wine_reviews).statement
+    df = pd.read_sql_query(stmt, session.bind)
+    del df['id']
+    del df['latitude']
+    del df['longitude']
+    
+    df.dropna(how="any", inplace=True)
+    data = df.to_dict(orient='records')
+
+    # Returns json list of all reviews
+    return jsonify(data)
+
 
 if __name__ == "__main__":
     dbfile = os.path.join('raw_data/wine_reviews.sqlite')
