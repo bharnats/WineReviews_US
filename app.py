@@ -107,8 +107,7 @@ if __name__ == "__main__":
     #dbfile = os.path.join('raw_data/wine_reviews.sqlite')
     
 #    dbfile = os.path.join('postgresql-shallow-66978')
-    engine = create_engine(f"postgres://zpwindpjwximhr:4c4745b4a4757f38935dba160e0568fe66107784d89ce5bfeae9e379a97b0d78@ec2-54-243-31-34.compute-1.amazonaws.com:5432/d3h3geasr9gqhd
-")
+    engine = create_engine(f"postgres://zpwindpjwximhr:4c4745b4a4757f38935dba160e0568fe66107784d89ce5bfeae9e379a97b0d78@ec2-54-243-31-34.compute-1.amazonaws.com:5432/d3h3geasr9gqhd")
     # reflect an existing database into a new model
     Base = automap_base()
     # reflect the tables
