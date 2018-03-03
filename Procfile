@@ -1,1 +1,1 @@
-web: gunicorn WineReviews_US:app
+web: python app.py
