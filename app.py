@@ -101,8 +101,9 @@ def stateData(state):
 
 
 if __name__ == "__main__":
-    dbfile = os.path.join('raw_data/wine_reviews.sqlite')
-    engine = create_engine(f"sqlite:///{dbfile}")
+    #dbfile = os.path.join('raw_data/wine_reviews.sqlite')
+    dbfile = os.path.join('postgresql-shallow-66978')
+    engine = create_engine(f"postgresql:///{dbfile}")
     # reflect an existing database into a new model
     Base = automap_base()
     # reflect the tables
