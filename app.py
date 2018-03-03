@@ -10,10 +10,13 @@ from sqlalchemy import create_engine,func
 from flask.ext.sqlalchemy import SQLAlchemy
 import urllib
 import psycopg2
+from flask_heroku import Heroku
 
 from flask import Flask, jsonify, render_template
 app = Flask(__name__)
-
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+heroku = Heroku(app)
+session = SQLAlchemy(app)
 #################################################
 # Database Setup
 #################################################
@@ -110,14 +113,13 @@ if __name__ == "__main__":
 #    engine = create_engine(f"postgresql:///{dbfile}")
     # reflect an existing database into a new model
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/wine-analytics'
     #dbname = url.path[1:]
     #user = url.username
     #password = url.password
     #host = url.hostname
     #port = url.port
 
-    session = SQLAlchemy(app)
+
 
 #    Base = automap_base()
     # reflect the tables
