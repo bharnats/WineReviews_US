@@ -7,6 +7,7 @@ import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine,func
+from flask.ext.sqlalchemy import SQLAlchemy
 import urllib
 import psycopg2
 
@@ -109,20 +110,14 @@ if __name__ == "__main__":
 #    engine = create_engine(f"postgresql:///{dbfile}")
     # reflect an existing database into a new model
 
-    url = os.environ['DATABASE_URL']
-    dbname = url.path[1:]
-    user = url.username
-    password = url.password
-    host = url.hostname
-    port = url.port
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/wine-analytics'
+    #dbname = url.path[1:]
+    #user = url.username
+    #password = url.password
+    #host = url.hostname
+    #port = url.port
 
-    session = psycopg2.connect(
-                dbname=dbname,
-                user=user,
-                password=password,
-                host=host,
-                port=port
-                )
+    session = SQLAlchemy(app)
 
 #    Base = automap_base()
     # reflect the tables
