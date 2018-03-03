@@ -1,1 +1,1 @@
-web: gunicorn app:app
+web: gunicorn WineReviews_US:app
