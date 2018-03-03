@@ -109,7 +109,7 @@ if __name__ == "__main__":
 #    engine = create_engine(f"postgresql:///{dbfile}")
     # reflect an existing database into a new model
 
-    url = urllib.parse(os.environ['DATABASE_URL'])
+    url = os.environ['DATABASE_URL']
     dbname = url.path[1:]
     user = url.username
     password = url.password
