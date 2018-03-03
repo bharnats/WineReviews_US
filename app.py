@@ -111,7 +111,7 @@ if __name__ == "__main__":
     wine_reviews = Base.classes.reviews 
     # Create our session (link) from Python to the Database
     session = Session(engine)
-    app.run(debug=True)
+    app.run()
     
 
 
