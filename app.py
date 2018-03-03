@@ -7,6 +7,7 @@ import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine,func
+from urlparse import urlparse
 import psycopg2
 
 from flask import Flask, jsonify, render_template
@@ -108,7 +109,7 @@ if __name__ == "__main__":
 #    engine = create_engine(f"postgresql:///{dbfile}")
     # reflect an existing database into a new model
 
-    url = urlparse.urlparse(os.environ['DATABASE_URL'])
+    url = urlparse(os.environ['DATABASE_URL'])
     dbname = url.path[1:]
     user = url.username
     password = url.password
