@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Wine Reviews - BarPlot</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+        <div class="navbar-wrapper">
+                <div class="container">
+                <nav class="navbar navbar-inverse navbar-static-top">
+                          <div class="container">
+                            <div class="navbar-header">
+                              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                              </button>
+                              <a class="navbar-brand" href="index.html">Wine Review</a>
+                            </div>
+                            <div id="navbar" class="navbar-collapse collapse">
+                              <ul class="nav navbar-nav">
+                                <li><a href="index.html">Home</a></li>
+                                <li class="dropdown active">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Plots <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                      <li><a href="bar.html">Points & Price</a></li>
+                                    </ul>
+                                  </li>
+                                <li><a href="data.html">Data</a></li>
+                              </ul>
+                            </div>
+                          </div>
+                        </nav>
+                      </div>
+                    </div>
+
+<div class="container">
+<div class="jumbotron" style="background-image:url(https://img.aws.livestrongcdn.com/ls-article-image-673/ds-photo/getty/article/181/173/484541235.jpg);
+background-size: 100% 150%;">
+        <h1>Wine Reviews</h1> 
+        <p>Visual chart for average price and points for each variety of graph used in specific state.</p> 
+        </div></div>
+        
+        <div class="container">
+        <div class="">
+                <div class="col-md-12">
+                    <div class="well">
+                        <p>Select State:
+                        <select id="selDataset" onchange="optionChanged(this.value)"></select></p>
+                    </div>
+                </div></div>
+        </div>
+        <div class="container">
+        <div class="row">
+                <div class="col-md-12">
+                    <div id="bar"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-6">
+                        <div id="donut"></div>
+                    </div>
+                </div>
+            </div>
+</body>
+
+<script>
+
+        init();
+
+        function init() {
+            console.log("init");
+            getOptions();
+        }
+
+        function getOptions(){
+            var selector = document.getElementById('selDataset');
+            Plotly.d3.json('/states', function(error, stateNames) {
+                for (var i = 0; i < stateNames.length;  i++) {
+                    var currentOption = document.createElement('option');
+                    currentOption.text = stateNames[i];
+                    currentOption.value = stateNames[i]
+                    selector.appendChild(currentOption);
+                }
+
+                getData(stateNames[0], buildCharts);
+            })
+        }
+
+        function getData(state, callback) {
+            console.log("GetData");
+            // Use a request to grab the json data needed for all charts
+            Plotly.d3.json(`/stateData/${state}`, function(error, stateData) {
+                if (error) return console.warn(error);
+                console.log("Executed");
+                callback(stateData);
+                });
+            }
+
+        function buildCharts(stateData) {
+            console.log("BuuildCharts");
+
+            var trace1 = {
+                x: stateData[0]['Variety'],
+                y: stateData[0]['Avg_Price'],
+                name: 'Avg Price',
+                type: 'bar'
+                };
+
+                var trace2 = {
+                x: stateData[0]['Variety'],
+                y: stateData[0]['Avg_Points'],
+                name: 'Avg Points',
+                type: 'bar'
+                };
+
+                var data = [trace1, trace2];
+
+                var layout ={
+                    barmode: 'group',
+                    xaxis:{title:"Varieties of Grapes"},
+                    yaxis:{title:"Price and Points"}
+                };
+
+                Plotly.newPlot('bar', data, layout);
+            
+                for (var st in stateData) {
+                    string = stateData[st];
+                    }
+
+            // var donuts=donutChart(stateData);
+            // var donutData=donuts[0];
+            // var donutLayout=donuts[1];
+            // console.log(donuts);
+
+        //     var donutLayout = {
+        //         title: 'Price, Points & Title Count by Variety',
+        //         annotations: [
+        //             {
+        //             font: {
+        //                 size: 20
+        //             },
+        //             showarrow: false,
+        //             text: "temp",
+        //             x: 0.1,
+        //             y: .8
+        //             }],
+        //         height: 600,
+        //         width: 600
+        //         };
+
+            
+            
+        //    //Plotly.newPlot('donut', donutData, donutLayout);
+        //    var data=[]
+        //    donutChart(stateData);
+        //    console.log(data);
+
+        //    Plotly.newPlot('donut',data,donutLayout);
+
+
+        //     function donutChart(stateData){
+        //     for(i=0;i<=string.State.length-1;i++)
+        //     {
+        //         stateData.forEach(function(element){
+        //         var kind = element.Variety[i]
+        //         var donutPoint = element.Avg_Points[i]
+        //         var donutPrice = element.Avg_Price[i]
+        //         var donutTitle = element.Title_Count[i]
+        //         data.push("data"+i);
+        //         data[i]=[{
+        //         values: [donutPoint,donutPrice,donutTitle],
+        //         labels: ['Avg_Price','Avg_Points','Title_Count' ],
+        //         domain: {
+        //             x: [0, .48]
+        //         },
+        //         name: kind,
+        //         hoverinfo: [],
+        //         hole: .4,
+        //         type: 'pie'
+        //         }];
+
+            
+        //         console.log(donutPoint);
+        //         console.log(donutPrice);
+        //         console.log(donutTitle);
+        //         console.log(element.Variety[i]);
+
+                
+        //     // var data =[temp]
+        //     //     console.log(data);
+
+        //         // Plotly.newPlot('donut', data, layout);
+        //         // var PANEL = document.getElementById("donut");
+        //         // subDonuts=document.createElement('div');
+        //         // subText= Plotly.newPlot('donut', data, layout);
+        //         // subDonuts.append(subText);
+
+        //         // PANEL.appendChild(subDonuts);
+        //         console.log(data);
+        //         console.log(layout);
+        //         return [data,layout];
+        //     });
+        //     };
+        // }
+        }
+
+        function optionChanged(newState) {
+            console.log("optionchanged");
+            // Fetch new data each time a new sample is selected
+            getData(newState, buildCharts);
+        }
+
+        function updateChart(){
+
+        }
+        
+</script>
+</html>
