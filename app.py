@@ -76,14 +76,16 @@ def home():
 # Routes for charts
 @app.route('/states')
 def states():
-    """Return a list of sample names."""
+    """Return a list of states names."""
 
     # Use Pandas to perform the sql query
-    state_avg=pd.read_sql('prpt',engine)
-    states=list(state_avg['State'].unique())
+    stmt = session.query(wine_reviews).statement
+    df = pd.read_sql_query(stmt, session.bind)
+    states=list(df['province'].unique())
 
-    # Return a list of the column names (sample names)
-    return jsonify(list(states))
+    # Return a list of the column names (state names)
+    return jsonify(states)
+
 
 @app.route("/stateData/<state>")
 def stateData(state):
